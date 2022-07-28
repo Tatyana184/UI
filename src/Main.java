@@ -4,25 +4,30 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Main {
+
+   static int count = 0;
     public static void main(String[] args) {
 
         JFrame frame = new JFrame();
-        JLabel label = new JLabel("Моя первая надпись!");
-        label.setVerticalAlignment(JLabel.TOP);
-
-        String[] size = {"10","20","30","40"};
-        JComboBox comboBox = new JComboBox(size);
-         int check = JOptionPane.showConfirmDialog(
-                frame,  comboBox, "Выберите размер шрифта",JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-
-    if(check == JOptionPane.OK_OPTION) {
+        JLabel label = new JLabel("Количество нажатий: " + count);
+        JButton button = new JButton();
+        frame.setSize(200,200);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+        frame.setLayout(new BorderLayout());
 
 
-            int sizeText = Integer.parseInt((String) comboBox.getSelectedItem());
+        frame.add(label,BorderLayout.PAGE_START);
+        frame.add(button,BorderLayout.CENTER);
 
-            label.setFont(new Font("Verdana", Font.PLAIN, sizeText));
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                count += 1;
+                label.setText("Количество нажатий: " + count);
 
-}
-        JOptionPane.showMessageDialog(frame, label);
+            }
+        });
+
     }
 }
