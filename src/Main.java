@@ -5,37 +5,61 @@ import java.awt.event.ActionListener;
 
 public class Main {
 
-   static int count = 0;
     public static void main(String[] args) {
-        JFrame f= new JFrame();
 
-        f.setVisible(true);
-        f.setSize(200,200);
-        Container c = f.getContentPane();
-        c.setLayout(null);
-        JButton btn=new JButton("Ответить ");
+        JFrame frame = new JFrame();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        JPanel panel = new JPanel();
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();//определяем разрешение монитора
+        int width=700, height=700;//задаем размер окна
+        frame.setBounds(dim.width / 2 - width / 2, dim.height / 2 - height / 2, width, height);//выставляем размеры окна
+
+
+
+        String[] colors = {"Зеленый","Красный","Желтый"};
+
+        JComboBox comboBox = new JComboBox(colors);
+        JCheckBox checkBox = new JCheckBox("Свой вариант");
+        JTextField textField = new JTextField();
+        JButton btn = new JButton("Ответить ");
         JLabel label = new JLabel();
-        String[] num = {"1","2","3","4","5","6","7","8","9","10"};
-        JSpinner spinner = new JSpinner(new SpinnerListModel(num));
 
-        spinner.setBounds(40,10,100,20);
-        btn.setBounds(40,50,100,20);
-        label.setBounds(50,100,100,20);
+        comboBox.setAlignmentX(Component.CENTER_ALIGNMENT);
+        checkBox.setAlignmentX(Component.CENTER_ALIGNMENT);
+        textField.setAlignmentX(Component.CENTER_ALIGNMENT);
+        btn.setAlignmentX(Component.CENTER_ALIGNMENT);
+        label.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        f.add(btn);
-        f.add(label);
-        f.add(spinner);
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));//задаем менеджер для выравнивания
+        panel.add(Box.createVerticalStrut(20));//между компонентами добавляем пустые промежутки
+        panel.add(comboBox);
+        panel.add(Box.createVerticalStrut(20));
+        panel.add(checkBox);
+        panel.add(Box.createVerticalStrut(20));
+        panel.add(textField);
+        panel.add(Box.createVerticalStrut(20));
+        panel.add(btn);
+        panel.add(Box.createVerticalStrut(20));
+        panel.add(label);
+        panel.add(Box.createVerticalStrut(20));
+        frame.add(panel);
+        frame.pack();
+        frame.setVisible(true);
 
 
-        btn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
 
-                label.setText("Ответ: " + spinner.getValue());
+            btn.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if(checkBox.isSelected()){
 
-            }
-        });
+                        label.setText("Ответ: " + textField.getText());
+                    }
+                    else {
+                        label.setText("Ответ: " + comboBox.getSelectedItem());
+                    }
+                }
+            });
 
     }
 }
