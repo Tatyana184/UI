@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,245 +9,189 @@ import static java.awt.Frame.MAXIMIZED_BOTH;
 
 public class Main {
     static JPanel panel = new JPanel ();//создаем панель
-    static String str; // храним содержимое строки ввода
-    static String op;
-   static double result;
 
-       public static void main(String[] args) {
+    static int numberOfQuestion = 1;
+    static int current = 0;
+    public static void main(String[] args) {
 
+       panel.setLayout(new GridBagLayout());//задаем менеджер для выравнивания
+       GridBagConstraints gridConstraints = new GridBagConstraints();
+           gridConstraints.gridx = 2;//  ячейка таблицы по горизонтали
+           gridConstraints.gridy = 0;//  ячейка таблицы по вертикали
+           gridConstraints.gridwidth = 1; // // размер  в  ячейки
+           gridConstraints.gridheight = 1; // // размер  в  ячейки
 
-        panel.setLayout(new GridBagLayout());//задаем менеджер для выравнивания
-
-           GridBagConstraints gridConstraints = new GridBagConstraints();
-
-           gridConstraints.gridx = 0;// нулевая ячейка таблицы по горизонтали
-           gridConstraints.gridy = 0;// нулевая ячейка таблицы по вертикали
-           gridConstraints.gridwidth = 4; // // размер кнопки в  ячейки
-           gridConstraints.gridheight = 1; // // размер кнопки в  ячейки
-           gridConstraints.weightx = 50; // интервал
-           gridConstraints.weighty = 100;// интервал
-           gridConstraints.insets = new Insets(5, 5, 5, 5);
-           gridConstraints.anchor = GridBagConstraints.CENTER; //Чтобы поместить компонент в центр контейнера
+           gridConstraints.insets = new Insets(5, 180, 5, 7);
+           gridConstraints.anchor = GridBagConstraints.PAGE_END; //Чтобы поместить компонент в конец контейнера
            gridConstraints.fill = GridBagConstraints.HORIZONTAL;
 
 
         JFrame frame = new JFrame();//создаем форму
+        panel.setBackground(Color.WHITE);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//способ выхода из формы
-        frame.setSize(500, 500);//выставляем размеры окна
+        frame.setResizable(false);//отключаем возможность изменения размеров
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();//определяем разрешение монитора
+        int width=1000, height=500;//задаем размер окна
+        frame.setBounds(10, 10, width, height);//выставляем размеры окна
 
-           JTextField textField = new JTextField();
 
-           JButton one = new JButton("1");
-           JButton two = new JButton("2");
-           JButton  three = new JButton("3");
-           JButton four = new JButton("4");
-           JButton five = new JButton("5");
-           JButton six = new JButton("6");
-           JButton seven = new JButton("7");
-           JButton eight = new JButton("8");
-           JButton nine = new JButton("9");
-           JButton zero = new JButton("0");
-           JButton minus = new JButton("-");
-           JButton delete = new JButton("C");
-           JButton plus = new JButton("+");
-           JButton division = new JButton("/");
-           JButton multiply = new JButton("*");
-           JButton button = new JButton("=");
+        JLabel label = new JLabel();
 
-           panel.add(textField, gridConstraints); // нулевая строка
+        JTextField text = new JTextField();
+        text.setHorizontalAlignment(JTextField.CENTER);
 
-           gridConstraints.gridy = 1; // первая строка
+        text.setBorder(new LineBorder(Color.BLACK, 1));
 
-           gridConstraints.gridwidth = 1;
-           panel.add(one, gridConstraints);
-           gridConstraints.gridx = 1;
-           panel.add(two, gridConstraints);
-           gridConstraints.gridx = 2;
-           panel.add(three, gridConstraints);
-           gridConstraints.gridx = 3;
-           panel.add(plus, gridConstraints);
+        JButton button1 = new JButton();
+        button1.setBorder(new LineBorder(Color.BLACK, 1));
+        button1.setBackground(Color.LIGHT_GRAY);
+
+        JButton button2 = new JButton();
+        button2.setBorder(new LineBorder(Color.BLACK, 1));
+        button2.setBackground(Color.LIGHT_GRAY);
+
+        JButton button3 = new JButton();
+        button3.setBorder(new LineBorder(Color.BLACK, 1));
+        button3.setBackground(Color.LIGHT_GRAY);
+
+        JButton button4 = new JButton();
+        button4.setBorder(new LineBorder(Color.BLACK, 1));
+        button4.setBackground(Color.LIGHT_GRAY);
+
+        panel.add(label, gridConstraints); // нулевая строка
+
+           gridConstraints.anchor = GridBagConstraints.CENTER;
+           gridConstraints.insets = new Insets(7, 7, 7, 7);
+           gridConstraints.gridwidth = 2; // занимаемое место
+           gridConstraints.ipadx = 400; // ширина
+           gridConstraints.ipady = 60; // высота
+           gridConstraints.gridx = 1; // столбец
+           gridConstraints.gridy = 1; // строка
+           panel.add(text, gridConstraints);
 
            gridConstraints.gridy = 2; // вторая строка
-
-           gridConstraints.gridx = 0;
-           panel.add(four, gridConstraints);
            gridConstraints.gridx = 1;
-           panel.add(five, gridConstraints);
+
+           gridConstraints.gridwidth = 1;// занимаемое место
+           gridConstraints.ipadx = 200;// ширина
+           gridConstraints.ipady = 60;// высота
+           panel.add(button1, gridConstraints);
+
            gridConstraints.gridx = 2;
-           panel.add(six, gridConstraints);
-           gridConstraints.gridx = 3;
-           panel.add(minus, gridConstraints);
+           panel.add(button2, gridConstraints);
 
            gridConstraints.gridy = 3; // третья строка
-
-           gridConstraints.gridx = 0;
-           panel.add(seven, gridConstraints);
            gridConstraints.gridx = 1;
-           panel.add(eight, gridConstraints);
-           gridConstraints.gridx = 2;
-           panel.add(nine, gridConstraints);
-           gridConstraints.gridx = 3;
-           panel.add(multiply, gridConstraints);
+           panel.add(button3, gridConstraints);
+
+            gridConstraints.gridx = 2;
+            panel.add(button4, gridConstraints);
+
+        frame.add(panel);//добавляем панель на форму
+      //  frame.pack();//пакуем
+        frame.setVisible(true);//делаем форму видимой
 
 
-           gridConstraints.gridy = 4; // четвертая
+       button1.addActionListener(new ActionListener() {
+           @Override
+           public void actionPerformed(ActionEvent e) {
 
-           gridConstraints.gridx = 0;
-           panel.add(delete, gridConstraints);
-           gridConstraints.gridx = 1;
-           panel.add(zero, gridConstraints);
-           gridConstraints.gridx = 2;
-           panel.add(button, gridConstraints);
-           gridConstraints.gridx = 3;
-           panel.add(division, gridConstraints);
-
-
-        button.addActionListener(new ActionListener() { //добавляем слушателя на кнопку =
+           }
+       });
+        button1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                str = textField.getText();
-                String[] mass = str.split(op);
 
-                try{
+             if(numberOfQuestion == 1){
+                 current += 1;
+             }
+              numberOfQuestion += 1;
 
-                    double a = Double.valueOf(mass[0]);
-                    double b = Double.valueOf(mass[1]);
+            }
+        });
+        button2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(numberOfQuestion == 2){
+                    current += 1;
+                }
+                numberOfQuestion += 1;
 
-                    Calculate(a,b);
+            }
+        });
+        button3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(numberOfQuestion == 3){
+                    current += 1;
+                }
+                numberOfQuestion += 1;
 
-                }catch(Exception exception){
-                    System.out.println("Error! Not number");
+            }
+        });
+        button4.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(numberOfQuestion == 4 || numberOfQuestion == 5){
+                    current += 1;
+                }
+                numberOfQuestion += 1;
+
+            }
+        });
+        while(true){
+
+            if(numberOfQuestion == 1){
+                label.setText("Вопрос " + numberOfQuestion+ "/5");
+                text.setText("Сведения об объектах окружающего нас мира это:");
+                button1.setText("информация");
+                button2.setText("объект");
+                button3.setText("предмет");
+                button4.setText("информатика");
+            }
+            else if(numberOfQuestion == 2) {
+                label.setText("Вопрос " + numberOfQuestion+ "/5");
+                text.setText("Информацию, изложенную на доступном для получателя языке называют:");
+                button1.setText("полной");
+                button2.setText("понятной");
+                button3.setText("полезной");
+                button4.setText("актуальной");
+            }
+            else if(numberOfQuestion == 3){
+                label.setText("Вопрос " + numberOfQuestion+ "/5");
+                text.setText("Наибольший объем информации человек получает при помощи:");
+                button1.setText("органов слуха");
+                button2.setText("органов обоняния");
+                button3.setText("органов зрения");
+                button4.setText("органов осязания");
+            }
+            else if(numberOfQuestion == 4){
+                label.setText("Вопрос " + numberOfQuestion+ "/5");
+                text.setText("Измерение температуры представляет собой");
+                button1.setText("процесс хранения");
+                button2.setText("процесс защиты");
+                button3.setText("процесс передачи");
+                button4.setText("процесс получения");
+            }
+            else if(numberOfQuestion == 5){
+                label.setText("Вопрос " + numberOfQuestion+ "/5");
+                text.setText("Что такое 1 байт?");
+                button1.setText("1024 Кбайт");
+                button2.setText("4 бит");
+                button3.setText("10 Мбайт");
+                button4.setText("8 бит");
+
+            }
+            else if(numberOfQuestion == 6){
+              int input = JOptionPane.showOptionDialog(frame,  "Ваш результат: "+ current + " из 5","Message", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+
+                if(input == JOptionPane.OK_OPTION)
+                {
+                    System.exit(1);
                 }
             }
+        }
 
-            private void Calculate(double a, double b) {
-
-                    switch (op){
-                        case "\\+":
-                           result = a+b;
-                            textField.setText(String.valueOf(result));
-                            break;
-                        case "\\-":
-                            result = a-b;
-                            textField.setText(String.valueOf(result));
-                            break;
-                        case "\\/":
-                            if(b == 0){
-                                textField.setText("Error! Division by zero");
-                            } else {
-                                result = a/b;
-                            textField.setText(String.valueOf(result));
-                            }
-                            break;
-                        case "\\*":
-                            result = a*b;
-                            textField.setText(String.valueOf(result));
-                            break;
-                        default:
-
-                            textField.setText("Operation Error!");
-                            break;
-                    }
-
-                }
-
-        });
-           zero.addActionListener(new ActionListener() { //добавляем слушателя на кнопку 0
-               @Override
-               public void actionPerformed(ActionEvent e) {
-                   textField.setText(textField.getText() + "0");
-               }
-           });
-           one.addActionListener(new ActionListener() { //добавляем слушателя на кнопку 1
-               @Override
-               public void actionPerformed(ActionEvent e) {
-                   textField.setText(textField.getText() + "1");
-               }
-           });
-           two.addActionListener(new ActionListener() { //добавляем слушателя на кнопку 2
-               @Override
-               public void actionPerformed(ActionEvent e) {
-                   textField.setText(textField.getText() + "2");
-               }
-           });
-           three.addActionListener(new ActionListener() { //добавляем слушателя на кнопку 3
-               @Override
-               public void actionPerformed(ActionEvent e) {
-                   textField.setText(textField.getText() + "3");
-               }
-           });
-          four.addActionListener(new ActionListener() { //добавляем слушателя на кнопку 4
-               @Override
-               public void actionPerformed(ActionEvent e) {
-                   textField.setText(textField.getText() + "4");
-               }
-           });
-           five.addActionListener(new ActionListener() { //добавляем слушателя на кнопку 5
-               @Override
-               public void actionPerformed(ActionEvent e) {
-                   textField.setText(textField.getText() + "5");
-               }
-           });
-           six.addActionListener(new ActionListener() { //добавляем слушателя на кнопку 6
-               @Override
-               public void actionPerformed(ActionEvent e) {
-                   textField.setText(textField.getText() + "6");
-               }
-           });
-          seven.addActionListener(new ActionListener() { //добавляем слушателя на кнопку 7
-               @Override
-               public void actionPerformed(ActionEvent e) {
-                   textField.setText(textField.getText() + "7");
-               }
-           });
-           eight.addActionListener(new ActionListener() { //добавляем слушателя на кнопку 8
-               @Override
-               public void actionPerformed(ActionEvent e) {
-                   textField.setText(textField.getText() + "8");
-               }
-           });
-           nine.addActionListener(new ActionListener() { //добавляем слушателя на кнопку 9
-               @Override
-               public void actionPerformed(ActionEvent e) {
-                   textField.setText(textField.getText() + "9");
-               }
-           });
-           minus.addActionListener(new ActionListener() { //добавляем слушателя на кнопку -
-               @Override
-               public void actionPerformed(ActionEvent e) {
-                   op = "\\-";
-                   textField.setText(textField.getText() + "-");
-               }
-           });
-           plus.addActionListener(new ActionListener() { //добавляем слушателя на кнопку +
-               @Override
-               public void actionPerformed(ActionEvent e) {
-                   op = "\\+";
-                   textField.setText(textField.getText() + "+");
-               }
-           });
-          multiply.addActionListener(new ActionListener() { //добавляем слушателя на кнопку *
-               @Override
-               public void actionPerformed(ActionEvent e) {
-                   op = "\\*";
-                   textField.setText(textField.getText() + "*");
-               }
-           });
-           division.addActionListener(new ActionListener() { //добавляем слушателя на кнопку /
-               @Override
-               public void actionPerformed(ActionEvent e) {
-                   op = "\\/";
-                   textField.setText(textField.getText() + "/");
-               }
-           });
-           delete.addActionListener(new ActionListener() { //добавляем слушателя на кнопку C
-               @Override
-               public void actionPerformed(ActionEvent e) {
-                  textField.setText(null);
-               }
-           });
-        frame.add(panel);//добавляем панель на форму
-        frame.pack();//пакуем
-        frame.setVisible(true);//делаем форму видимой
     }
+
 }
