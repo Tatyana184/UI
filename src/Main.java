@@ -4,8 +4,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Calendar;
 
+import static java.awt.Frame.MAXIMIZED_BOTH;
+
 public class Main {
     static JPanel panel = new JPanel ();//создаем панель
+
 
     static void addObject(JComponent o, int n, float alignmentX){//метод добавления объектов на панель
         o.setAlignmentX(alignmentX);//устанавливаем горизонтальное выравнивание
@@ -14,45 +17,28 @@ public class Main {
     };
 
     public static void main(String[] args) {
+
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));//задаем менеджер для выравнивания
         panel.setBorder(BorderFactory.createEmptyBorder(20,20,10,20));//расширяем границы панели, чтобы элементы не прижимались вплотную к границе
 
         JFrame frame = new JFrame();//создаем форму
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//способ выхода из формы
-        frame.setTitle("Радиобаттон");//заголовок формы
-        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();//определяем разрешение монитора
-        int width=300, height=200;//задаем размер окна
-        frame.setBounds(dim.width / 2 - width / 2, dim.height / 2 - height / 2, width, height);//выставляем размеры окна
+        frame.setSize(1500, 1500);//выставляем размеры окна
 
-        int month = Calendar.getInstance().get(Calendar.MONTH)+1;//вычисляем текущий месяц, чтобы в дальнейшем по умолчанию выставить в радиобаттон текущее время года (месяцы считаются с 0)
-        ButtonGroup buttons = new ButtonGroup();//создаем группу кнопок
-        JRadioButton dim1 = new JRadioButton("Весна", month>2&&month<6?true:false);//создаем сами кнопки
-        JRadioButton dim2 = new JRadioButton("Лето", month>5&&month<9?true:false);
-        JRadioButton dim3 = new JRadioButton("Осень", month>8&&month<12?true:false);
-        JRadioButton dim4 = new JRadioButton("Зима", month>11||month<3?true:false);
-        dim1.setActionCommand("Весна");//добавляем для них пометку при нажатии
-        dim2.setActionCommand("Лето");
-        dim3.setActionCommand("Осень");
-        dim4.setActionCommand("Зима");
-        buttons.add(dim1);//добавляем кнопки в группу
-        buttons.add(dim2);
-        buttons.add(dim3);
-        buttons.add(dim4);
-        addObject(dim1,0,Component.LEFT_ALIGNMENT);
-        addObject(dim2,0,Component.LEFT_ALIGNMENT);
-        addObject(dim3,0,Component.LEFT_ALIGNMENT);
-        addObject(dim4,10,Component.LEFT_ALIGNMENT);
-
-        JButton button = new JButton("Ответить");//создаем кнопку
-        addObject(button,10,Component.LEFT_ALIGNMENT);//добавляем его
-
-        JLabel label = new JLabel("Ответ:");//создаем надпись
-        addObject(label,10,Component.LEFT_ALIGNMENT);//добавляем ее
+        JTextField textField = new JTextField();
+        addObject(textField,10,Component.CENTER_ALIGNMENT);
+        JButton button = new JButton("Записать");
+        addObject(button,10,Component.CENTER_ALIGNMENT);
+        JTextArea text = new JTextArea();
+        text.setEditable(true);
+        JScrollPane scrollPane = new JScrollPane(text);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        addObject(scrollPane,10,Component.CENTER_ALIGNMENT);
 
         button.addActionListener(new ActionListener() {//добавляем слушателя на кнопку
             @Override
             public void actionPerformed(ActionEvent e) {
-                label.setText("Ответ: "+buttons.getSelection().getActionCommand());//считываем значение из радиобаттона
+                text.append(textField.getText()+ "\n");//считываем значение из радиобаттона
             }
         });
 
